@@ -1,0 +1,11 @@
+[web]
+%{ for instance in web_instances ~}
+${instance.ip_address}
+%{ endfor ~}
+
+%{ if length(loadbalancers) > 0 ~}
+[loadbalancers]
+%{ for instance in loadbalancers ~}
+${instance.ip_address}
+%{ endfor ~}
+%{ endif ~}

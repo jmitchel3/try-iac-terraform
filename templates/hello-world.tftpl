@@ -1,0 +1,6 @@
+Hello ${name},
+
+Here are the items you ordered:
+%{ for item in items ~}
+- ${item}
+%{ endfor ~}
