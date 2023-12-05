@@ -61,7 +61,3 @@ resource "linode_instance" "web" {
     # }
 }
 
-output "vm_ssh_string" {
-    value = "ssh root@${linode_instance.web[0].ip_address}"
-    sensitive = false
-}

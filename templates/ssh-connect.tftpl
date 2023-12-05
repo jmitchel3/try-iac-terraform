@@ -1,0 +1,3 @@
+%{ for ip_address in ip_addresses ~}
+ssh root@${ip_address}
+%{ endfor ~}
