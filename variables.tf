@@ -13,3 +13,9 @@ variable "linode_web_instance_count" {
   description = "The number of instances for webapp servers to create."
   type = number
 }
+
+variable "ssh_public_key_path" {
+  description = "Local Key Path to SSH Public Key Value"
+  default = "~/.ssh/id_rsa.pub"
+  type = string
+}
