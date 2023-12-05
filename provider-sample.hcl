@@ -1,8 +1,8 @@
 resource "linode_instance" "web" {
-    // api-related args
     label = "simple_instance"
     image = "linode/ubuntu18.04"
-    
+    region = "us-central"
+    type = "g6-standard-1"
     authorized_keys = ["ssh-rsa AAAA...Gw== user@example.local"]
     root_pass = "terr4form-test"
 
