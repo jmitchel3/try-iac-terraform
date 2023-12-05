@@ -20,3 +20,8 @@ resource "linode_instance" "web" {
     # authorized_keys = ["ssh-rsa AAAA...Gw== user@example.local"]
     root_pass = var.linode_instance_pw
 }
+
+output "vm_ssh_string" {
+    value = "ssh root@${linode_instance.web.ip_address}"
+    sensitive = false
+}
