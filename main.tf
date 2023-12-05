@@ -23,29 +23,29 @@ resource "linode_instance" "web" {
     tags = ["try-iac-web"]
     root_pass = var.linode_instance_pw
     
-    provisioner "file" {
-        connection {
-            host = "${self.ip_address}"
-            type = "ssh"
-            user = "root"
-            private_key = "${file(var.ssh_private_key_path)}"
-        }
-        source = local.boostrap_script_path
-        destination = "/tmp/bootstrap-docker.sh"
-    }
+    # provisioner "file" {
+    #     connection {
+    #         host = "${self.ip_address}"
+    #         type = "ssh"
+    #         user = "root"
+    #         private_key = "${file(var.ssh_private_key_path)}"
+    #     }
+    #     source = local.boostrap_script_path
+    #     destination = "/tmp/bootstrap-docker.sh"
+    # }
 
-    provisioner "remote-exec" {
-        connection {
-            host = "${self.ip_address}"
-            type = "ssh"
-            user = "root"
-            private_key = "${file(var.ssh_private_key_path)}"
-        }
-        inline = [
-            "chmod +x /tmp/bootstrap-docker.sh",
-            "sudo sh /tmp/bootstrap-docker.sh"
-        ]
-    }
+    # provisioner "remote-exec" {
+    #     connection {
+    #         host = "${self.ip_address}"
+    #         type = "ssh"
+    #         user = "root"
+    #         private_key = "${file(var.ssh_private_key_path)}"
+    #     }
+    #     inline = [
+    #         "chmod +x /tmp/bootstrap-docker.sh",
+    #         "sudo sh /tmp/bootstrap-docker.sh"
+    #     ]
+    # }
 
     # provisioner "remote-exec" {
     #     connection {
@@ -61,3 +61,7 @@ resource "linode_instance" "web" {
     # }
 }
 
+resource "local_file" "web_ips" {
+  content = length(linode_instance.web) == 0 ? "No ips" : join("\n", [for host in linode_instance.web.*: "${host.ip_address}"])
+  filename = "local-web-ips.txt"
+}
