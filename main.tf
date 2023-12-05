@@ -8,6 +8,6 @@ terraform {
 }
 
 # Configure the Linode Provider
-# provider "linode" {
-#   token = "api-token"
-# }
+provider "linode" {
+  token = var.linode_api_token
+}
