@@ -7,7 +7,13 @@ terraform {
     }
 }
 
+variable "linode_api_token" {
+    default="some-value"
+    sensitive = false
+}
+# use var.linode_api_token
+
 # Configure the Linode Provider
 # provider "linode" {
-#   # token = "..."
+#   token = "api-token"
 # }
