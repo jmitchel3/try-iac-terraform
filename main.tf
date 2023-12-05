@@ -5,6 +5,7 @@ terraform {
             # version = "2.10.1"
         }
     }
+    backend "s3" {}
 }
 
 # Configure the Linode Provider
