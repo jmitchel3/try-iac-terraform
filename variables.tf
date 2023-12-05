@@ -19,3 +19,10 @@ variable "ssh_public_key_path" {
   default = "~/.ssh/id_rsa.pub"
   type = string
 }
+
+variable "ssh_private_key_path" {
+  description = "Local Key Path to SSH Private Key Value"
+  default = "~/.ssh/id_rsa"
+  type = string
+  sensitive = true
+}

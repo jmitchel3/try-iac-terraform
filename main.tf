@@ -22,6 +22,19 @@ resource "linode_instance" "web" {
     authorized_keys = [split("\n", file(var.ssh_public_key_path))[0]]
     tags = ["try-iac-web"]
     root_pass = var.linode_instance_pw
+
+    provisioner "remote-exec" {
+        connection {
+            host = "${self.ip_address}"
+            type = "ssh"
+            user = "root"
+            private_key = "${file(var.ssh_private_key_path)}"
+        }
+        inline = [
+            "sudo apt-get update",
+            "curl -fsSL https://get.docker.com | sudo su"
+        ]
+    }
 }
 
 output "vm_ssh_string" {
