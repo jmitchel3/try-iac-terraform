@@ -17,11 +17,22 @@ resource "linode_instance" "web" {
     count = var.linode_web_instance_count
     label = "try-iac-tf-${count.index}"
     image = "linode/ubuntu22.04"
-    region = "us-central"
+    region = "us-sea"
     type = "g6-nanode-1"
     authorized_keys = [split("\n", file(var.ssh_public_key_path))[0]]
     tags = ["try-iac-web"]
     root_pass = var.linode_instance_pw
+    
+    provisioner "file" {
+        connection {
+            host = "${self.ip_address}"
+            type = "ssh"
+            user = "root"
+            private_key = "${file(var.ssh_private_key_path)}"
+        }
+        source = local.boostrap_script_path
+        destination = "/tmp/bootstrap-docker.sh"
+    }
 
     provisioner "remote-exec" {
         connection {
@@ -31,10 +42,23 @@ resource "linode_instance" "web" {
             private_key = "${file(var.ssh_private_key_path)}"
         }
         inline = [
-            "sudo apt-get update",
-            "curl -fsSL https://get.docker.com | sudo su"
+            "chmod +x /tmp/bootstrap-docker.sh",
+            "sudo sh /tmp/bootstrap-docker.sh"
         ]
     }
+
+    # provisioner "remote-exec" {
+    #     connection {
+    #         host = "${self.ip_address}"
+    #         type = "ssh"
+    #         user = "root"
+    #         private_key = "${file(var.ssh_private_key_path)}"
+    #     }
+    #     inline = [
+    #         "sudo apt-get update",
+    #         "curl -fsSL https://get.docker.com | sudo su"
+    #     ]
+    # }
 }
 
 output "vm_ssh_string" {
