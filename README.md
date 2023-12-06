@@ -1,4 +1,4 @@
-# Try IaC Terraform
+# Try IaC Terraform: Course
 
 Welcome to the reference repository for the Try IaC: Terraform Chapter + Course. 
 
