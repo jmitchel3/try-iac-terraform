@@ -1,5 +1,6 @@
 locals {
     root_dir = "${abspath(path.root)}"
+    devops_dir = "${dirname(local.root_dir)}/devops"
     scripts_dir = "${local.root_dir}/scripts"
     boostrap_script_path = "${local.scripts_dir}/bootstrap-docker.sh"
     templates_dir =  "${local.root_dir}/templates"

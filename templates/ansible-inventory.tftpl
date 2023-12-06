@@ -1,0 +1,7 @@
+[load_balancer]
+${lb_ip_addr}
+
+[webapps]
+%{ for ip_address in ip_addresses ~}
+${ip_address}
+%{ endfor ~}
