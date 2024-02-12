@@ -19,7 +19,9 @@ resource "linode_instance" "web" {
     image = "linode/ubuntu22.04"
     region = "us-sea"
     type = "g6-nanode-1"
-    authorized_keys = [split("\n", file(var.ssh_public_key_path))[0]]
+    # trimspace is more relaiable from my latest tests
+    authorized_keys = [trimspace(file(var.ssh_public_key_path))]
+    # authorized_keys = [split("\n", file(var.ssh_public_key_path))[0]]
     tags = ["try-iac-web"]
     root_pass = var.linode_instance_pw
     
