@@ -17,7 +17,9 @@ resource "linode_instance" "web" {
     image = "linode/ubuntu22.04"
     region = "us-sea"
     type = "g6-standard-1"
-    authorized_keys = [split(" \n", file(var.ssh_public_key_path))[0]]
+    # I found that the method trimspace is more reliable
+    authorized_keys = [trimspace(file(var.ssh_public_key_path))]
+    # authorized_keys = [split(" \n", file(var.ssh_public_key_path))[0]]
     
     # provisioner "file" {
     #     connection {
